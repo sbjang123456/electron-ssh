@@ -24,16 +24,17 @@ export const useConnectionStore = create<ConnectionStore>((set) => ({
 
   setConnections: (connections) => set({ connections }),
   selectConnection: (id) => set({ selectedConnectionId: id }),
-  addConnection: (connection) => set((state) => ({ connections: [...state.connections, connection] })),
+  addConnection: (connection) =>
+    set((state) => ({ connections: [...state.connections, connection] })),
   updateConnection: (id, updates) =>
     set((state) => ({
-      connections: state.connections.map((c) => (c.id === id ? { ...c, ...updates } : c))
+      connections: state.connections.map((c) => (c.id === id ? { ...c, ...updates } : c)),
     })),
   removeConnection: (id) =>
     set((state) => ({
       connections: state.connections.filter((c) => c.id !== id),
-      selectedConnectionId: state.selectedConnectionId === id ? null : state.selectedConnectionId
+      selectedConnectionId: state.selectedConnectionId === id ? null : state.selectedConnectionId,
     })),
   setLoading: (isLoading) => set({ isLoading }),
-  setError: (error) => set({ error })
+  setError: (error) => set({ error }),
 }))

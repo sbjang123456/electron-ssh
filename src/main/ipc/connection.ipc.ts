@@ -1,7 +1,10 @@
 import { ipcMain } from 'electron'
+import type {
+  CreateConnectionDTO,
+  UpdateConnectionDTO,
+} from '../../renderer/entities/connection/model/types'
 import { IPC_CHANNELS } from '../../shared/config/ipc-channels'
-import { StorageService } from '../services/storage.service'
-import type { CreateConnectionDTO, UpdateConnectionDTO } from '../../renderer/entities/connection/model/types'
+import type { StorageService } from '../services/storage.service'
 
 export function registerConnectionHandlers(storageService: StorageService) {
   ipcMain.handle(IPC_CHANNELS.CONNECTION.GET_ALL, () => {
@@ -19,7 +22,7 @@ export function registerConnectionHandlers(storageService: StorageService) {
       password: undefined,
       passphrase: undefined,
       hasPassword: !!connection.password,
-      hasPassphrase: !!connection.passphrase
+      hasPassphrase: !!connection.passphrase,
     }
   })
 
@@ -31,7 +34,7 @@ export function registerConnectionHandlers(storageService: StorageService) {
       password: undefined,
       passphrase: undefined,
       hasPassword: !!connection.password,
-      hasPassphrase: !!connection.passphrase
+      hasPassphrase: !!connection.passphrase,
     }
   })
 

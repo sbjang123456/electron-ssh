@@ -1,29 +1,28 @@
-import { useEffect } from "react";
-import { Server, Terminal, Wifi } from "lucide-react";
-import { ScrollArea } from "@/shared/ui";
-import { useConnectionStore } from "@/entities/connection";
-import { CreateConnectionDialog } from "@/features/create-connection";
-import { ConnectionCard } from "./ConnectionCard";
+import { Server, Terminal, Wifi } from 'lucide-react'
+import { useEffect } from 'react'
+import { useConnectionStore } from '@/entities/connection'
+import { CreateConnectionDialog } from '@/features/create-connection'
+import { ScrollArea } from '@/shared/ui'
+import { ConnectionCard } from './ConnectionCard'
 
 export function ConnectionList() {
-  const { connections, setConnections, isLoading, setLoading } =
-    useConnectionStore();
+  const { connections, setConnections, isLoading, setLoading } = useConnectionStore()
 
   useEffect(() => {
     const loadConnections = async () => {
-      setLoading(true);
+      setLoading(true)
       try {
-        const data = await window.electronAPI.connection.getAll();
-        setConnections(data);
+        const data = await window.electronAPI.connection.getAll()
+        setConnections(data)
       } catch (error) {
-        console.error("Failed to load connections:", error);
+        console.error('Failed to load connections:', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    loadConnections();
-  }, [setConnections, setLoading]);
+    loadConnections()
+  }, [setConnections, setLoading])
 
   return (
     <div className="flex flex-col h-full bg-[hsl(240,10%,6%)]">
@@ -38,9 +37,7 @@ export function ConnectionList() {
           </div>
           <div>
             <h1 className="text-lg font-semibold tracking-tight">SSH Client</h1>
-            <p className="text-xs text-muted-foreground">
-              Secure Shell Connections
-            </p>
+            <p className="text-xs text-muted-foreground">Secure Shell Connections</p>
           </div>
         </div>
         <CreateConnectionDialog />
@@ -90,10 +87,8 @@ export function ConnectionList() {
 
       {/* Footer */}
       <div className="p-3 border-t border-white/5">
-        <p className="text-[10px] text-muted-foreground/50 text-center">
-          Electron SSH v1.0.0
-        </p>
+        <p className="text-[10px] text-muted-foreground/50 text-center">Electron SSH v1.0.0</p>
       </div>
     </div>
-  );
+  )
 }

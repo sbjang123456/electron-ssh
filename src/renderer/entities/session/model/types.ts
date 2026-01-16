@@ -56,5 +56,5 @@ export const DEFAULT_TERMINAL_THEME: TerminalTheme = {
   brightBlue: '#3b8eea',
   brightMagenta: '#d670d6',
   brightCyan: '#29b8db',
-  brightWhite: '#ffffff'
+  brightWhite: '#ffffff',
 }

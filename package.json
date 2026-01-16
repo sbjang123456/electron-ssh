@@ -11,7 +11,13 @@
     "build:unpack": "pnpm build && electron-builder --dir",
     "build:win": "pnpm build && electron-builder --win",
     "build:mac": "pnpm build && electron-builder --mac",
-    "build:linux": "pnpm build && electron-builder --linux"
+    "build:linux": "pnpm build && electron-builder --linux",
+    "lint": "biome lint ./src",
+    "lint:fix": "biome lint --write ./src",
+    "format": "biome format ./src",
+    "format:fix": "biome format --write ./src",
+    "check": "biome check ./src",
+    "check:fix": "biome check --write ./src"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -39,6 +45,7 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@biomejs/biome": "~2.3.11",
     "@electron-toolkit/tsconfig": "^1.0.1",
     "@electron-toolkit/utils": "^4.0.0",
     "@types/react": "^19.0.7",

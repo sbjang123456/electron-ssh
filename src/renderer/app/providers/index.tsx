@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { ThemeProvider } from './theme-provider'
 
 interface ProvidersProps {

@@ -1,9 +1,9 @@
-import { BrowserWindow } from 'electron'
+import type { BrowserWindow } from 'electron'
+import type { SSHService } from '../services/ssh.service'
+import type { StorageService } from '../services/storage.service'
 import { registerConnectionHandlers } from './connection.ipc'
-import { registerSSHHandlers } from './ssh.ipc'
 import { registerDialogHandlers } from './dialog.ipc'
-import { StorageService } from '../services/storage.service'
-import { SSHService } from '../services/ssh.service'
+import { registerSSHHandlers } from './ssh.ipc'
 
 export function registerAllHandlers(
   storageService: StorageService,

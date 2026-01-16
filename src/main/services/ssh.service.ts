@@ -1,7 +1,7 @@
-import { Client, ClientChannel } from 'ssh2'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'node:events'
+import { readFileSync } from 'node:fs'
+import { Client, type ClientChannel } from 'ssh2'
 import { v4 as uuidv4 } from 'uuid'
-import { readFileSync } from 'fs'
 import type { Connection } from '../../renderer/entities/connection/model/types'
 
 export interface SSHSession extends EventEmitter {
@@ -23,7 +23,7 @@ export class SSHService {
         id: sessionId,
         connectionId: connection.id,
         client,
-        stream: null
+        stream: null,
       })
 
       client.on('ready', () => {
@@ -69,7 +69,7 @@ export class SSHService {
         port: connection.port,
         username: connection.username,
         readyTimeout: 20000,
-        keepaliveInterval: 10000
+        keepaliveInterval: 10000,
       }
 
       if (connection.authMethod === 'password') {

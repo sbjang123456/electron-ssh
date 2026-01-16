@@ -1,6 +1,6 @@
-import { Terminal } from '@xterm/xterm'
 import { FitAddon } from '@xterm/addon-fit'
 import { WebLinksAddon } from '@xterm/addon-web-links'
+import { Terminal } from '@xterm/xterm'
 import type { TerminalTheme } from '@/entities/session'
 
 export interface XTermInstance {
@@ -20,10 +20,10 @@ export function createTerminal(theme?: TerminalTheme): XTermInstance {
       foreground: '#d4d4d4',
       cursor: '#d4d4d4',
       cursorAccent: '#1e1e1e',
-      selectionBackground: 'rgba(255, 255, 255, 0.3)'
+      selectionBackground: 'rgba(255, 255, 255, 0.3)',
     },
     allowTransparency: true,
-    scrollback: 10000
+    scrollback: 10000,
   })
 
   const fitAddon = new FitAddon()

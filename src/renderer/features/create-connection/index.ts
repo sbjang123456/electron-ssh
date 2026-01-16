@@ -1,3 +1,3 @@
-export { CreateConnectionDialog } from './ui/CreateConnectionDialog'
+export { type ConnectionFormData, connectionSchema } from './model/connection-schema'
 export { ConnectionForm } from './ui/ConnectionForm'
-export { connectionSchema, type ConnectionFormData } from './model/connection-schema'
+export { CreateConnectionDialog } from './ui/CreateConnectionDialog'

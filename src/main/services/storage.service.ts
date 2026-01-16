@@ -1,7 +1,11 @@
-import Store from 'electron-store'
 import { safeStorage } from 'electron'
-import type { Connection, CreateConnectionDTO, UpdateConnectionDTO } from '../../renderer/entities/connection/model/types'
+import Store from 'electron-store'
 import { v4 as uuidv4 } from 'uuid'
+import type {
+  Connection,
+  CreateConnectionDTO,
+  UpdateConnectionDTO,
+} from '../../renderer/entities/connection/model/types'
 
 interface StoredConnection extends Omit<Connection, 'password' | 'passphrase'> {
   encryptedPassword?: string
@@ -19,8 +23,8 @@ export class StorageService {
     this.store = new Store<StoreSchema>({
       name: 'electron-ssh-config',
       defaults: {
-        connections: []
-      }
+        connections: [],
+      },
     })
   }
 
@@ -43,7 +47,7 @@ export class StorageService {
     return connections.map(({ encryptedPassword, encryptedPassphrase, ...rest }) => ({
       ...rest,
       hasPassword: !!encryptedPassword,
-      hasPassphrase: !!encryptedPassphrase
+      hasPassphrase: !!encryptedPassphrase,
     }))
   }
 
@@ -56,7 +60,7 @@ export class StorageService {
     return {
       ...rest,
       password: encryptedPassword ? this.decrypt(encryptedPassword) : undefined,
-      passphrase: encryptedPassphrase ? this.decrypt(encryptedPassphrase) : undefined
+      passphrase: encryptedPassphrase ? this.decrypt(encryptedPassphrase) : undefined,
     }
   }
 
@@ -73,7 +77,7 @@ export class StorageService {
       createdAt: now,
       updatedAt: now,
       encryptedPassword: dto.password ? this.encrypt(dto.password) : undefined,
-      encryptedPassphrase: dto.passphrase ? this.encrypt(dto.passphrase) : undefined
+      encryptedPassphrase: dto.passphrase ? this.encrypt(dto.passphrase) : undefined,
     }
 
     const connections = this.store.get('connections', [])
@@ -84,7 +88,7 @@ export class StorageService {
     return {
       ...rest,
       password: dto.password,
-      passphrase: dto.passphrase
+      passphrase: dto.passphrase,
     }
   }
 
@@ -98,8 +102,18 @@ export class StorageService {
       ...existing,
       ...dto,
       updatedAt: new Date().toISOString(),
-      encryptedPassword: dto.password !== undefined ? (dto.password ? this.encrypt(dto.password) : undefined) : existing.encryptedPassword,
-      encryptedPassphrase: dto.passphrase !== undefined ? (dto.passphrase ? this.encrypt(dto.passphrase) : undefined) : existing.encryptedPassphrase
+      encryptedPassword:
+        dto.password !== undefined
+          ? dto.password
+            ? this.encrypt(dto.password)
+            : undefined
+          : existing.encryptedPassword,
+      encryptedPassphrase:
+        dto.passphrase !== undefined
+          ? dto.passphrase
+            ? this.encrypt(dto.passphrase)
+            : undefined
+          : existing.encryptedPassphrase,
     }
 
     connections[index] = updated
@@ -109,7 +123,7 @@ export class StorageService {
     return {
       ...rest,
       password: encryptedPassword ? this.decrypt(encryptedPassword) : undefined,
-      passphrase: encryptedPassphrase ? this.decrypt(encryptedPassphrase) : undefined
+      passphrase: encryptedPassphrase ? this.decrypt(encryptedPassphrase) : undefined,
     }
   }
 

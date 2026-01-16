@@ -1,7 +1,7 @@
-import { ipcMain, BrowserWindow } from 'electron'
+import { type BrowserWindow, ipcMain } from 'electron'
 import { IPC_CHANNELS } from '../../shared/config/ipc-channels'
-import { SSHService } from '../services/ssh.service'
-import { StorageService } from '../services/storage.service'
+import type { SSHService } from '../services/ssh.service'
+import type { StorageService } from '../services/storage.service'
 
 export function registerSSHHandlers(
   sshService: SSHService,
@@ -33,7 +33,7 @@ export function registerSSHHandlers(
 
     return {
       sessionId: session.id,
-      connectionId: session.connectionId
+      connectionId: session.connectionId,
     }
   })
 

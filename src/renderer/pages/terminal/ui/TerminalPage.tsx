@@ -1,30 +1,27 @@
-import { useEffect } from "react";
-import { Terminal, WifiOff, AlertCircle, Loader2 } from "lucide-react";
-import { useSessionStore } from "@/entities/session";
-import { TerminalTabs } from "@/widgets/terminal-tabs";
-import { TerminalView } from "@/widgets/terminal-view";
-import { ConnectionList } from "@/widgets/connection-list";
+import { AlertCircle, Loader2, Terminal, WifiOff } from 'lucide-react'
+import { useEffect } from 'react'
+import { useSessionStore } from '@/entities/session'
+import { ConnectionList } from '@/widgets/connection-list'
+import { TerminalTabs } from '@/widgets/terminal-tabs'
+import { TerminalView } from '@/widgets/terminal-view'
 
 export function TerminalPage() {
-  const { sessions, activeSessionId, updateSessionStatus, removeSession } =
-    useSessionStore();
+  const { sessions, activeSessionId, updateSessionStatus } = useSessionStore()
 
   useEffect(() => {
     const removeCloseListener = window.electronAPI.ssh.onClose((sessionId) => {
-      updateSessionStatus(sessionId, "disconnected");
-    });
+      updateSessionStatus(sessionId, 'disconnected')
+    })
 
-    const removeErrorListener = window.electronAPI.ssh.onError(
-      (sessionId, error) => {
-        updateSessionStatus(sessionId, "error", error);
-      },
-    );
+    const removeErrorListener = window.electronAPI.ssh.onError((sessionId, error) => {
+      updateSessionStatus(sessionId, 'error', error)
+    })
 
     return () => {
-      removeCloseListener();
-      removeErrorListener();
-    };
-  }, [updateSessionStatus, removeSession]);
+      removeCloseListener()
+      removeErrorListener()
+    }
+  }, [updateSessionStatus])
 
   return (
     <div className="flex h-screen bg-background">
@@ -53,12 +50,9 @@ export function TerminalPage() {
                     <Terminal className="h-12 w-12 text-primary" />
                   </div>
                 </div>
-                <h2 className="text-xl font-semibold text-foreground mb-2">
-                  No Active Sessions
-                </h2>
+                <h2 className="text-xl font-semibold text-foreground mb-2">No Active Sessions</h2>
                 <p className="text-sm text-muted-foreground max-w-[280px]">
-                  Select a connection from the sidebar or create a new one to
-                  start your SSH session
+                  Select a connection from the sidebar or create a new one to start your SSH session
                 </p>
                 <div className="flex items-center justify-center gap-6 mt-8 text-xs text-muted-foreground/60">
                   <div className="flex items-center gap-2">
@@ -82,15 +76,12 @@ export function TerminalPage() {
                 key={session.id}
                 className="absolute inset-0"
                 style={{
-                  display: session.id === activeSessionId ? "block" : "none",
+                  display: session.id === activeSessionId ? 'block' : 'none',
                 }}
               >
-                {session.status === "connected" ? (
-                  <TerminalView
-                    sessionId={session.id}
-                    isActive={session.id === activeSessionId}
-                  />
-                ) : session.status === "connecting" ? (
+                {session.status === 'connected' ? (
+                  <TerminalView sessionId={session.id} isActive={session.id === activeSessionId} />
+                ) : session.status === 'connecting' ? (
                   /* Connecting State */
                   <div className="flex items-center justify-center h-full">
                     <div className="text-center animate-fade-in">
@@ -100,21 +91,15 @@ export function TerminalPage() {
                           <Loader2 className="h-12 w-12 text-amber-500 animate-spin" />
                         </div>
                       </div>
-                      <h2 className="text-xl font-semibold text-foreground mb-2">
-                        Connecting...
-                      </h2>
+                      <h2 className="text-xl font-semibold text-foreground mb-2">Connecting...</h2>
                       <p className="text-sm text-muted-foreground">
-                        Establishing connection to{" "}
-                        <span className="text-amber-500">
-                          {session.connectionName}
-                        </span>
+                        Establishing connection to{' '}
+                        <span className="text-amber-500">{session.connectionName}</span>
                       </p>
-                      <p className="text-xs text-muted-foreground/60 mt-1">
-                        {session.host}
-                      </p>
+                      <p className="text-xs text-muted-foreground/60 mt-1">{session.host}</p>
                     </div>
                   </div>
-                ) : session.status === "error" ? (
+                ) : session.status === 'error' ? (
                   /* Error State */
                   <div className="flex items-center justify-center h-full">
                     <div className="text-center animate-fade-in">
@@ -128,7 +113,7 @@ export function TerminalPage() {
                         Connection Failed
                       </h2>
                       <p className="text-sm text-red-400 max-w-[300px]">
-                        {session.error || "Unable to establish SSH connection"}
+                        {session.error || 'Unable to establish SSH connection'}
                       </p>
                       <p className="text-xs text-muted-foreground/60 mt-3">
                         Check your credentials and try again
@@ -145,15 +130,10 @@ export function TerminalPage() {
                           <WifiOff className="h-12 w-12 text-zinc-400" />
                         </div>
                       </div>
-                      <h2 className="text-xl font-semibold text-foreground mb-2">
-                        Session Ended
-                      </h2>
+                      <h2 className="text-xl font-semibold text-foreground mb-2">Session Ended</h2>
                       <p className="text-sm text-muted-foreground">
-                        Connection to{" "}
-                        <span className="text-foreground">
-                          {session.connectionName}
-                        </span>{" "}
-                        was closed
+                        Connection to{' '}
+                        <span className="text-foreground">{session.connectionName}</span> was closed
                       </p>
                     </div>
                   </div>
@@ -164,5 +144,5 @@ export function TerminalPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

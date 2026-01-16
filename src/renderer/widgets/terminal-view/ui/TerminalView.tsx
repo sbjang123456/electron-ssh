@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import '@xterm/xterm/css/xterm.css'
 import { createTerminal, fitTerminal, type XTermInstance } from '../lib/xterm-setup'
 
@@ -63,10 +63,6 @@ export function TerminalView({ sessionId, isActive }: TerminalViewProps) {
   }, [isActive, handleResize])
 
   return (
-    <div
-      ref={containerRef}
-      className="h-full w-full bg-[#1e1e1e]"
-      style={{ padding: '8px' }}
-    />
+    <div ref={containerRef} className="h-full w-full bg-[#1e1e1e]" style={{ padding: '8px' }} />
   )
 }

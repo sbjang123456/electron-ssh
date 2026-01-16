@@ -9,7 +9,7 @@ export const connectionSchema = z
     authMethod: z.enum(['password', 'privateKey']),
     password: z.string().optional(),
     privateKeyPath: z.string().optional(),
-    passphrase: z.string().optional()
+    passphrase: z.string().optional(),
   })
   .refine(
     (data) => {
@@ -23,7 +23,7 @@ export const connectionSchema = z
     },
     {
       message: 'Password or Private Key path is required based on auth method',
-      path: ['password']
+      path: ['password'],
     }
   )
 

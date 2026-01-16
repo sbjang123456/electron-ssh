@@ -4,8 +4,8 @@ import { TerminalPage } from '@/pages/terminal'
 const router = createHashRouter([
   {
     path: '/',
-    element: <TerminalPage />
-  }
+    element: <TerminalPage />,
+  },
 ])
 
 export function AppRouter() {

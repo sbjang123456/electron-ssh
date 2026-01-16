@@ -1,35 +1,35 @@
-import { useState } from "react";
-import { Plus, Server } from "lucide-react";
+import { Plus, Server } from 'lucide-react'
+import { useState } from 'react'
+import { useConnectionStore } from '@/entities/connection'
 import {
   Button,
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogDescription,
-} from "@/shared/ui";
-import { useConnectionStore } from "@/entities/connection";
-import { ConnectionForm } from "./ConnectionForm";
-import type { ConnectionFormData } from "../model/connection-schema";
+} from '@/shared/ui'
+import type { ConnectionFormData } from '../model/connection-schema'
+import { ConnectionForm } from './ConnectionForm'
 
 export function CreateConnectionDialog() {
-  const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const { addConnection } = useConnectionStore();
+  const [open, setOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const { addConnection } = useConnectionStore()
 
   const handleSubmit = async (data: ConnectionFormData) => {
-    setIsLoading(true);
+    setIsLoading(true)
     try {
-      const connection = await window.electronAPI.connection.create(data);
-      addConnection(connection);
-      setOpen(false);
+      const connection = await window.electronAPI.connection.create(data)
+      addConnection(connection)
+      setOpen(false)
     } catch (error) {
-      console.error("Failed to create connection:", error);
+      console.error('Failed to create connection:', error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -60,5 +60,5 @@ export function CreateConnectionDialog() {
         />
       </DialogContent>
     </Dialog>
-  );
+  )
 }

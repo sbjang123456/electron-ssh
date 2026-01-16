@@ -19,7 +19,7 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
   addSession: (session) =>
     set((state) => ({
       sessions: [...state.sessions, session],
-      activeSessionId: session.id
+      activeSessionId: session.id,
     })),
 
   removeSession: (id) =>
@@ -27,7 +27,8 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
       const newSessions = state.sessions.filter((s) => s.id !== id)
       return {
         sessions: newSessions,
-        activeSessionId: state.activeSessionId === id ? (newSessions[0]?.id ?? null) : state.activeSessionId
+        activeSessionId:
+          state.activeSessionId === id ? (newSessions[0]?.id ?? null) : state.activeSessionId,
       }
     }),
 
@@ -41,11 +42,13 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
               ...s,
               status,
               error,
-              disconnectedAt: status === 'disconnected' ? new Date().toISOString() : s.disconnectedAt
+              disconnectedAt:
+                status === 'disconnected' ? new Date().toISOString() : s.disconnectedAt,
             }
           : s
-      )
+      ),
     })),
 
-  getSessionByConnectionId: (connectionId) => get().sessions.find((s) => s.connectionId === connectionId)
+  getSessionByConnectionId: (connectionId) =>
+    get().sessions.find((s) => s.connectionId === connectionId),
 }))

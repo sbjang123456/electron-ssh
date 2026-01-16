@@ -1,43 +1,42 @@
-import { useState } from "react";
-import { Trash2, AlertTriangle, Loader2 } from "lucide-react";
+import { AlertTriangle, Loader2, Trash2 } from 'lucide-react'
+import { useState } from 'react'
+import { type ConnectionSafe, useConnectionStore } from '@/entities/connection'
 import {
   Button,
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/shared/ui";
-import { useConnectionStore, type ConnectionSafe } from "@/entities/connection";
+  DialogHeader,
+  DialogTitle,
+} from '@/shared/ui'
 
 interface DeleteConnectionDialogProps {
-  connection: ConnectionSafe;
+  connection: ConnectionSafe
 }
 
-export function DeleteConnectionDialog({
-  connection,
-}: DeleteConnectionDialogProps) {
-  const [open, setOpen] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const { removeConnection } = useConnectionStore();
+export function DeleteConnectionDialog({ connection }: DeleteConnectionDialogProps) {
+  const [open, setOpen] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const { removeConnection } = useConnectionStore()
 
   const handleDelete = async () => {
-    setIsDeleting(true);
+    setIsDeleting(true)
     try {
-      await window.electronAPI.connection.delete(connection.id);
-      removeConnection(connection.id);
-      setOpen(false);
+      await window.electronAPI.connection.delete(connection.id)
+      removeConnection(connection.id)
+      setOpen(false)
     } catch (error) {
-      console.error("Failed to delete connection:", error);
+      console.error('Failed to delete connection:', error)
     } finally {
-      setIsDeleting(false);
+      setIsDeleting(false)
     }
-  };
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <button
+        type="button"
         onClick={() => setOpen(true)}
         className="p-1.5 rounded-md text-muted-foreground/50 hover:text-red-400 hover:bg-red-500/10 transition-colors"
       >
@@ -52,19 +51,16 @@ export function DeleteConnectionDialog({
             <div>
               <DialogTitle className="text-lg">Delete Connection</DialogTitle>
               <DialogDescription className="mt-1.5 text-sm">
-                Are you sure you want to delete{" "}
-                <span className="text-foreground font-medium">
-                  "{connection.name}"
-                </span>
-                ?
+                Are you sure you want to delete{' '}
+                <span className="text-foreground font-medium">"{connection.name}"</span>?
               </DialogDescription>
             </div>
           </div>
         </DialogHeader>
 
         <div className="py-3 px-4 rounded-lg bg-red-500/5 border border-red-500/10 text-sm text-muted-foreground">
-          This action cannot be undone. All saved credentials for this
-          connection will be permanently removed.
+          This action cannot be undone. All saved credentials for this connection will be
+          permanently removed.
         </div>
 
         <DialogFooter className="gap-2 pt-4">
@@ -96,5 +92,5 @@ export function DeleteConnectionDialog({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
